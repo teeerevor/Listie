@@ -104,36 +104,4 @@ a, a:active, a:visited { color: #607890; }
 a:hover { color: #036; }
 /* End reset */
 
-body { 
-  position: absolute; 
-  top: 0; right: 0; bottom: 0; left: 0; 
-  overflow: hidden; 
-  font-family: 'Terminal Dosis Light';
-  -webkit-perspective: 800;
-  -webkit-text-size-adjust: none;
-  -webkit-transform-style: preserve-3d;
-}
-
-article {
-  position: absolute;
-  top: 0; left: 0;
-  opacity: 0;
-  cursor: pointer;
-  max-width: 80%;
-  -webkit-box-sizing: -webkit-box;
-  -moz-box-sizing:    -moz-box;
-  box-sizing:         -webkit-box;
-  -webkit-transition: all 30s linear;
-  -moz-transition:    all 30s linear;
-  transition:         all 30s linear;
-  -webkit-transform-style:  preserve-3d;
-  -moz-transform-style:     preserve-3d;
-  transform-style:          preserve-3d;
-}
-article h1    { font-size: 3em }
-article p     { display: none; font-size: 1.5em; margin: 0.5em 0 }
-article p:first-child { display: block }
-
-/* Blue variant */
-body    { background: #404154; color: #6c6e8e }
-article { background: rgba(255, 255, 255, 0.05) }
+body > header { width: 900px; margin: 50px auto; font-family: 'League Script'; font-size: 8em }
