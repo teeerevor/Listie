@@ -104,4 +104,66 @@ a, a:active, a:visited { color: #607890; }
 a:hover { color: #036; }
 /* End reset */
 
-body > header { width: 900px; margin: 50px auto; font-family: 'League Script'; font-size: 8em }
+body > section {
+  position: absolute;
+  width: 900px;
+  opacity: 0;
+  -webkit-transition: all 0.25s ease-out;
+  -webkit-transform: translate3d(-50px,0,0);
+}
+
+body > section.current { -webkit-transform: translate3d(0,0,0); opacity: 1 }
+
+input, button { font-family: inherit }
+input::-webkit-input-placeholder { font-style: italic }
+
+button {
+  border: 0;
+  text-shadow: 1px 1px 0px #757575;
+  color: #FFF;
+  display: inline-block;
+  padding: 0.15em 0.25em;
+  text-decoration: none;
+  text-transform: uppercase;
+  -webkit-box-shadow: 1px 1px 0px #000;
+  -webkit-border-radius: 0.5em;  
+}
+button:disabled { opacity: 0.5 }
+
+body { width: 900px; margin: 50px auto; font-family: 'Amaranth' }
+
+body > header { font-family: 'Waiting for the Sunrise'; font-size: 8em }
+body > header *   { display: inline-block }
+body > header h1  { -webkit-transform: translate3d(0, 0, 0); opacity: 1; -webkit-animation: from-left 1s 1 ease-out }
+body > header img { -webkit-transform: translate3d(0, 0, 0) rotate(50deg); -webkit-animation: from-the-sky 2s 1 linear; }
+
+menu > button { font-size: 1.5em; margin-right: 0.5em }
+
+#new-item { margin: 30px 0 15px }
+
+#new-list         { background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#01f751), to(#01c440)) }
+#new-list:before  { font-size: 1.25em; content: '+'; padding-right: 0.25em; -webkit-border-radius: 0.5em }
+#delete-items         { background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fe422b), to(#f51c01)) }
+#delete-items:before  { font-size: 1.25em; content: '-'; padding-right: 0.25em; -webkit-border-radius: 0.5em }
+
+#new-item       { width: 50% }
+#new-item input { font-size: 1.5em; width: 100% }
+
+#items { list-style-type: none; margin: 0 }
+#items li { font-size: 1.4em; margin: 0.25em 0; }
+#items li.negative:before { display: inline-block; content: '✗'; width: 1em; padding: 0 0.1em 0 0; margin-right: 0.5em; text-align: center; -webkit-border-radius: 0.5em; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fe422b), to(#f51c01)); text-shadow: 1px 1px 0px #000; color: #fff; }
+#items li.positive:before { display: inline-block; content: '✓'; width: 1em; padding: 0 0.1em 0 0; margin-right: 0.5em; text-align: center; -webkit-border-radius: 0.5em; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#01f751), to(#01c440)); text-shadow: 1px 1px 0px #000; color: #fff; }
+
+@-webkit-keyframes from-left {
+  0%    { -webkit-transform: translate3d(-50px, 0, 0); opacity: 0 }
+  50%   { -webkit-transform: translate3d(-50px, 0, 0); opacity: 0 }
+  100%  { -webkit-transform: translate3d(0, 0, 0); opacity: 1 }
+}
+
+@-webkit-keyframes from-the-sky {
+  0%  { -webkit-transform: translate3d(0, -100px, 0); opacity: 0 }
+  85% { -webkit-transform: translate3d(0, -50px, 0); opacity: 0 }
+  90% { -webkit-transform: translate3d(0, 20px, 0); opacity: 1 }
+  95% { -webkit-transform: translate3d(0, -5px, 0) rotate(5deg); opacity: 1 }
+  100% { -webkit-transform: translate3d(0, 0, 0) rotate(50deg); opacity: 1 }
+}
