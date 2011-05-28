@@ -3,7 +3,8 @@
     routes : {
       ''          : 'newList',
       '!/'        : 'newList',
-      '!/browse'  : 'browse'
+      '!/browse'  : 'browse',
+      '!/account' : 'account'
     },
     
     newList : function() {
@@ -14,6 +15,11 @@
     browse : function() {
       $('section.current').removeClass('current');
       _.delay(function() { Listie.Browser.el.addClass('current'); }, 250);
+    },
+    
+    account : function() {
+      $('section.current').removeClass('current');
+      _.delay(function() { Listie.Account.el.addClass('current'); }, 250);
     }
   });
 })();

@@ -10,14 +10,14 @@ describe 'the API' do
   end
 
   context 'authentication' do
-    it 'POST /login with params[:name] authenticates a user if the name exists' do
+    it 'POST /sign-in with params[:name] authenticates a user if the name exists' do
       user = Fabricate :user
-      post '/login', name: user.name
+      post '/sign-in', name: user.name
       last_response.should be_ok
     end
 
-    it 'POST /login with params[:name] returns 404 if the name does not exist' do
-      post '/login', name: 'none'
+    it 'POST /sign-in with params[:name] returns 404 if the name does not exist' do
+      post '/sign-in', name: 'none'
       last_response.status.should be 404
     end
 
@@ -31,7 +31,7 @@ describe 'the API' do
   context 'lists' do
     before do
       @user = Fabricate :user
-      # post '/login', name: @user.name
+      # post '/sign-in', name: @user.name
     end
 
     context 'creating' do

@@ -11,11 +11,12 @@
   <body>
     <header>
       <h1>Listie</h1>
-      <img alt="apple" src="/img/listie.png">      
+      <img alt="apple" src="/img/listie.png">
     </header>
     <section id="new">
       <menu>
         <button id="new-list">New list</button>
+        <button id="save-list">Save</button>
         <button id="delete-items" disabled>Delete</button>
       </menu>
       <form action="/items" method="post" id="new-item">
@@ -23,29 +24,56 @@
       </form>
       <ul id="items">
         <li class="empty negative">This list has no items yet!</li>
-      </ul>      
+      </ul>
     </section>
     <section id="browse">
       <h1>My old lists</h1>
       <ul id="old-lists">
         <li class="empty">You have no old lists yet!</li>
       </ul>
-    </section>    
+    </section>
+    <section id="account">
+      <section id="sign-in">
+        <header>
+          <h1>Sign in</h1>
+          <aside>You can only save lists once you're logged in</aside>          
+        </header>
+        <form action="/sign-in" method="post">
+          <input type="text" name="name">
+          <button>Sign in</button>
+        </form>
+      </section>
+      <section id="sign-up">
+        <h1>Don't have a user? Sign up!</h1>
+      </section>
+      <form action="/users" method="post">
+        <input type="text" name="name">
+        <button>Sign up</button>
+      </form>
+    </section>
+    <script type="text/template" id="list-item-template">
+      <input type="checkbox">
+      <%= name %>
+    </script>
     <script src="/js/yepnope.1.0.1-min.js"></script>
     <script>
       Listie = {};
       yepnope([
-        { load: ['/js/jquery-1.6.1.min.js', '/js/underscore.js', '/js/backbone.js'] }, // deps
+        { load: ['/js/jquery-1.6.1.min.js', '/js/underscore.js', '/js/backbone.js', '/js/localstorage.js'] }, // deps
         {
-          load: ['/js/list.js', '/js/creator.js', '/js/browser.js', '/js/routes.js'], // app stuff
+          load: ['/js/models.js', '/js/lists.js', '/js/browser.js', '/js/account.js', '/js/routes.js'], // app stuff
           complete  : function() {
+            // Data-related stuff first
+            Listie.newList = new List;
+
             Listie.Creator = new Creator;
             Listie.Browser = new Browser;
             Listie.Router = new Router;
+            Listie.Account = new AccountManager;
             Backbone.history.start();
           }
         }
       ]);
     </script>
-  </body>  
+  </body>
 </html>
