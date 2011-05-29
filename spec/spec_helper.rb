@@ -26,7 +26,3 @@ end
 Fabricator :list do
   date  { Date.today  - rand(20).days }
 end
-
-Fabricator :item do
-  name  { Fabricate.sequence(:number) { |i| "Item #{i}" } } 
-end

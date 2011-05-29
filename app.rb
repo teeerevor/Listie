@@ -19,7 +19,7 @@ end
 
 def parse_json_request
   request.body.rewind
-  params.merge!(JSON.parse request.body.read) rescue HashWithIndifferentAccess.new
+  params.merge!(JSON.parse request.body.read) rescue nil
 end
 
 def json_request?
@@ -32,7 +32,11 @@ end
 
 before do
   parse_json_request if json_request?
-  @user = User.find session[:user_id] unless session[:user_id].blank?
+  begin
+    @user = User.find session[:user_id] unless session[:user_id].blank?
+  rescue Mongoid::Errors::DocumentNotFound
+    session.clear
+  end
 end
 
 get '/' do
@@ -41,20 +45,22 @@ end
 
 post '/users' do
   content_type :json
-  user = User.create params[:user]
+  puts "GOT: #{params.inspect} with name: #{params[:name]}"
+  user = User.create name: params[:name]
   session[:user_id] = user.id.to_s
   user.to_json methods: [:id]
 end
 
 post '/sign-in' do
   content_type :json
-  user = User.where(name: params[:name]).first
-  halt(404, {}, 'User not found!') unless user
+  puts "GOT: #{params.inspect}"
+  user = User.where(name: params['name']).first
+  halt(401, {}, 'Invalid user name!') unless user
   session[:user_id] = user.name
   user.to_json methods: [:id]
 end
 
-get '/logout' do
+get '/sign-out' do
   content_type :json
   session.clear
   { message: 'Logged out!'}.to_json

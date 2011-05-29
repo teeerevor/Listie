@@ -5,7 +5,8 @@
       '!/'          : 'currentList',
       '!/browse'    : 'browse',
       '!/account'   : 'account',
-      '!/lists/:id' : 'show'
+      '!/lists/:id' : 'show',
+      '!/sign-out'  : 'signOut'
     },
     
     currentList : function() {
@@ -24,8 +25,12 @@
     },
     
     show : function(id) {
-      var list = Listie.Lists.get(id)
-      Listie.currentList.set(list.attributes) // So we don't lose bindings
+      var list = Listie.Lists.get(id);
+      Listie.currentList.set(list.attributes); // So we don't lose event bindings
+    },
+    
+    signOut : function() {
+      Listie.User.signOut();
     }
   });
 })();

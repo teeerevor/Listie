@@ -30,5 +30,5 @@
     }
   }); 
   
-  var Lists = Backbone.Collection.extend({ url : '/lists' });
+  Lists = Backbone.Collection.extend({ url : '/lists' });
 })();
