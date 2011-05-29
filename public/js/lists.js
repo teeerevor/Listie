@@ -27,14 +27,15 @@
     list    : $('#items'),
     events  : {
       'submit form'         : 'create',
-      'click #delete-items' : 'removeSelected'
+      'click #delete-items' : 'removeSelected',
+      'click #save-list'    : 'saveToServer'
     },
     
     initialize : function() {
       _.bindAll(this, 'add', 'addAll', 'calculateSelected');
-      Listie.newList.bind('add',      this.add);
-      Listie.newList.bind('refresh',  this.addAll);
-      Listie.newList.fetch();
+      Listie.newList.Items.bind('add',      this.add);
+      Listie.newList.Items.bind('refresh',  this.addAll);
+      Listie.newList.Items.fetch();
     },
     
     add : function(item) {
@@ -45,24 +46,28 @@
     },
     
     addAll : function() {
-      Listie.newList.each(this.add);
+      Listie.newList.Items.each(this.add);
     },
     
     create : function(event) {
       event.preventDefault();
       var field = this.el.find(':text');
-      Listie.newList.create({ name : field.val() });
+      Listie.newList.Items.create({ name : field.val() });
       field.val('').focus();
     },
     
     calculateSelected : function() {
-      var total = Listie.newList.selected().length,
+      var total = Listie.newList.Items.selected().length,
         button = this.el.find('#delete-items');
       total ? button.text('Delete (' + total + ')') && button.removeAttr('disabled') : button.text('Delete') && button.attr('disabled', 'disabled');
     },
     
     removeSelected : function() {
-      Listie.newList.removeSelected();
+      Listie.newList.Items.removeSelected();
+    },
+    
+    saveToServer : function() {
+      Listie.newList.save();
     }
   });
 })();

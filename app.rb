@@ -19,7 +19,7 @@ end
 
 def parse_json_request
   request.body.rewind
-  params = JSON.parse request.body.read rescue HashWithIndifferentAccess.new
+  params.merge!(JSON.parse request.body.read) rescue HashWithIndifferentAccess.new
 end
 
 def json_request?
@@ -32,7 +32,6 @@ end
 
 before do
   parse_json_request if json_request?
-  puts "GOT: #{session.inspect}"
   @user = User.find session[:user_id] unless session[:user_id].blank?
 end
 
@@ -44,7 +43,7 @@ post '/users' do
   content_type :json
   user = User.create params[:user]
   session[:user_id] = user.id.to_s
-  user.as_json
+  user.to_json methods: [:id]
 end
 
 post '/sign-in' do
@@ -52,7 +51,7 @@ post '/sign-in' do
   user = User.where(name: params[:name]).first
   halt(404, {}, 'User not found!') unless user
   session[:user_id] = user.name
-  user.as_json
+  user.to_json methods: [:id]
 end
 
 get '/logout' do
@@ -64,6 +63,13 @@ end
 post '/lists' do
   content_type :json
   login_required!
-  list = @user.lists.create date: params[:date]
-  list.as_json
+  list = @user.lists.create date: Date.today, items: params[:items] || []
+  list.to_json methods: [:id]
+end
+
+put '/lists/:id' do
+  content_type :json
+  list = @user.lists.find params[:id]
+  list.update_attributes items: params[:items]
+  list.to_json methods: [:id]
 end
