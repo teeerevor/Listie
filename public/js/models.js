@@ -10,7 +10,7 @@
     },
     
     removeSelected : function() {
-      _.each(Listie.newList.Items.selected(), function(item) { item.destroy(); });
+      _.each(Listie.currentList.Items.selected(), function(item) { item.destroy(); });
     }    
   });
   
@@ -28,5 +28,7 @@
     updateItems : function() {
       this.set({ items : this.Items.map(function(item) { return item.get('name'); }) });
     }
-  });  
+  }); 
+  
+  var Lists = Backbone.Collection.extend({ url : '/lists' });
 })();

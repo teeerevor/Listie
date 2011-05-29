@@ -64,13 +64,14 @@
           load: ['/js/models.js', '/js/lists.js', '/js/browser.js', '/js/account.js', '/js/routes.js'], // app stuff
           complete  : function() {
             // Data-related stuff first
-            Listie.newList = new List;
-
+            Listie.currentList = new List;
+            Listie.Lists = new Lists;
+            
             Listie.Creator = new Creator;
             Listie.Browser = new Browser;
             Listie.Router = new Router;
             Listie.Account = new AccountManager;
-            Backbone.history.start();
+            Backbone.history.start();            
           }
         }
       ]);

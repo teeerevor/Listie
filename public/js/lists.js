@@ -33,9 +33,9 @@
     
     initialize : function() {
       _.bindAll(this, 'add', 'addAll', 'calculateSelected');
-      Listie.newList.Items.bind('add',      this.add);
-      Listie.newList.Items.bind('refresh',  this.addAll);
-      Listie.newList.Items.fetch();
+      Listie.currentList.Items.bind('add',      this.add);
+      Listie.currentList.Items.bind('refresh',  this.addAll);
+      Listie.currentList.Items.fetch();
     },
     
     add : function(item) {
@@ -46,28 +46,28 @@
     },
     
     addAll : function() {
-      Listie.newList.Items.each(this.add);
+      Listie.currentList.Items.each(this.add);
     },
     
     create : function(event) {
       event.preventDefault();
       var field = this.el.find(':text');
-      Listie.newList.Items.create({ name : field.val() });
+      Listie.currentList.Items.create({ name : field.val() });
       field.val('').focus();
     },
     
     calculateSelected : function() {
-      var total = Listie.newList.Items.selected().length,
+      var total = Listie.currentList.Items.selected().length,
         button = this.el.find('#delete-items');
       total ? button.text('Delete (' + total + ')') && button.removeAttr('disabled') : button.text('Delete') && button.attr('disabled', 'disabled');
     },
     
     removeSelected : function() {
-      Listie.newList.Items.removeSelected();
+      Listie.currentList.Items.removeSelected();
     },
     
     saveToServer : function() {
-      Listie.newList.save();
+      Listie.currentList.save();
     }
   });
 })();
