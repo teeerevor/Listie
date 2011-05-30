@@ -30,5 +30,14 @@
     }
   }); 
   
-  Lists = Backbone.Collection.extend({ url : '/lists' });
+  Lists = Backbone.Collection.extend({ 
+    url : '/lists',
+    
+    initialize : function() {
+      var self = this;
+      Listie.User.bind('change:lists', function(user, lists) {
+        self.refresh(lists);
+      });
+    }
+  });
 })();

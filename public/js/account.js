@@ -23,7 +23,7 @@
         type      : 'get',
         dataType  : 'json',
         success   : function() {
-          self.set({ id: undefined, name: undefined });
+          self.set({ id: undefined, name: undefined, lists: [] });
           self.trigger('signout:success');
         }
       });      

@@ -18,12 +18,12 @@ describe 'the API' do
 
     it 'POST /sign-in with params[:name] returns 404 if the name does not exist' do
       post '/sign-in', name: 'none'
-      last_response.status.should be 404
+      last_response.status.should be 401
     end
 
-    it 'GET /logout logs the current user out' do
+    it 'GET /sign-out logs the current user out' do
       # Due to the stupidity of testing sessions and Sinatra, this test will remain largely useless.
-      get '/logout'
+      get '/sign-out'
       last_response.should be_ok
     end
   end

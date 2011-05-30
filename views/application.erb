@@ -13,11 +13,12 @@
       <h1>Listie</h1>
       <img alt="apple" src="/img/listie.png">
     </header>
-    <section id="new">
+    <section id="list">
       <menu>
         <button id="new-list">New list</button>
         <button id="save-list">Save</button>
         <button id="delete-items" disabled>Delete</button>
+        <a href="#!/browse">Browse</a>
       </menu>
       <form action="/items" method="post" id="new-item">
         <input type="text" name="name" id="item-name" placeholder="Enter an item name and press enter">
@@ -55,6 +56,10 @@
       <input type="checkbox">
       <%%= name %>
     </script>
+    <script type="text/template" id="list-template">
+      <input type="checkbox">
+      <a href="#!/lists/<%%= id %>"><%%= date.toString() %></a>
+    </script>    
     <script src="/js/yepnope.1.0.1-min.js"></script>
     <script>
       Listie = {};

@@ -54,8 +54,8 @@ post '/sign-in' do
   content_type :json
   user = User.where(name: params['name']).first
   halt(401, {}, 'Invalid user name!') unless user
-  session[:user_id] = user.name
-  user.to_json methods: [:id]
+  session[:user_id] = user.id
+  user.to_json methods: [:id], include: [:lists]
 end
 
 get '/sign-out' do
