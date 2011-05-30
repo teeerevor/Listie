@@ -55,6 +55,7 @@
     list    : $('#items'),
     events  : {
       'submit form'         : 'create',
+      'click #new-list'     : 'newList',
       'click #delete-items' : 'removeSelected',
       'click #save-list'    : 'saveToServer'
     },
@@ -76,6 +77,7 @@
     },
 
     addAll : function() {
+      this.list.empty();
       Listie.currentList.Items.each(this.add);
     },
 
@@ -94,6 +96,12 @@
 
     removeSelected : function() {
       Listie.currentList.Items.removeSelected();
+    },
+    
+    newList : function() {
+      Listie.currentList.set({ id: undefined, date: undefined, lists: []})
+      Listie.currentList.Items.refresh([]);
+      location.hash = '!/';
     },
 
     saveToServer : function() {

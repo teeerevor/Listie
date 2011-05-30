@@ -11,16 +11,19 @@
     
     removeSelected : function() {
       _.each(Listie.currentList.Items.selected(), function(item) { item.destroy(); });
-    }    
+    }
   });
   
   List = Backbone.Model.extend({    
     initialize : function() {
       var self = this;
-      if (!(self.get('articles'))) self.set({ 'items': [] }, { silent: true });
+      if (!(self.get('items'))) self.set({ 'items': [] }, { silent: true });
       _.bindAll(this, 'updateItems');
       self.Items = new Items;
       _.each(['refresh', 'add', 'remove'], function(e) { self.Items.bind(e, self.updateItems); });
+      self.bind('change:items', function(me, items) {
+        me.Items.refresh(_.map(items, function(name) { return { name : name } }));
+      });
     },
     
     url : function() { return this.isNew() ? '/lists' : '/lists/' + this.id; },

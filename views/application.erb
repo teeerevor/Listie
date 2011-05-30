@@ -66,12 +66,12 @@
       yepnope([
         { load: ['/js/jquery-1.6.1.min.js', '/js/underscore.js', '/js/backbone.js', '/js/localstorage.js'] }, // deps
         {
-          load: ['/js/models.js', '/js/lists.js', '/js/browser.js', '/js/account.js', '/js/routes.js'], // app stuff
+          load: ['/js/models.js', '/js/lists.js', '/js/account.js', '/js/routes.js'], // app stuff
           complete  : function() {
             // Data-related stuff first
             Listie.User = new User;
-            Listie.currentList = new List;
             Listie.Lists = new Lists;
+            Listie.currentList = new List;
 
             Listie.Creator = new Creator;
             Listie.Browser = new Browser;
