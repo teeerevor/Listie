@@ -40,12 +40,11 @@ before do
 end
 
 get '/' do
-  File.read Sinatra::Application.public + '/application.html'
+  erb :application
 end
 
 post '/users' do
   content_type :json
-  puts "GOT: #{params.inspect} with name: #{params[:name]}"
   user = User.create name: params[:name]
   session[:user_id] = user.id.to_s
   user.to_json methods: [:id]
@@ -53,7 +52,6 @@ end
 
 post '/sign-in' do
   content_type :json
-  puts "GOT: #{params.inspect}"
   user = User.where(name: params['name']).first
   halt(401, {}, 'Invalid user name!') unless user
   session[:user_id] = user.name

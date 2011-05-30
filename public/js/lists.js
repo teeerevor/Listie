@@ -32,9 +32,11 @@
     },
     
     initialize : function() {
-      _.bindAll(this, 'add', 'addAll', 'calculateSelected');
+      _.bindAll(this, 'add', 'addAll', 'calculateSelected', 'removeSelected');
       Listie.currentList.Items.bind('add',      this.add);
       Listie.currentList.Items.bind('refresh',  this.addAll);
+      Listie.currentList.Items.bind('remove',   this.calculateSelected);
+      Listie.currentList.Items.bind('add',      this.calculateSelected);
       Listie.currentList.Items.fetch();
     },
     
@@ -67,7 +69,13 @@
     },
     
     saveToServer : function() {
-      Listie.currentList.save();
+      Listie.currentList.save(
+        { }, // Save whatever attributes we've set() before
+        { 
+          success : function(model) { location.hash = '!/lists/' + model.get('id'); },
+          error   : function(attrs, response) { if (response.status === 401) location.hash = '!/account'; 
+        }
+      });
     }
   });
 })();
