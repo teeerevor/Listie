@@ -61,12 +61,23 @@
     },
 
     initialize : function() {
-      _.bindAll(this, 'add', 'addAll', 'calculateSelected', 'removeSelected');
+      _.bindAll(this, 'add', 'addAll', 'open', 'calculateSelected', 'removeSelected');
       Listie.currentList.Items.bind('add',      this.add);
+      Listie.currentList.Items.bind('add',      this.calculateSelected);      
       Listie.currentList.Items.bind('refresh',  this.addAll);
       Listie.currentList.Items.bind('remove',   this.calculateSelected);
-      Listie.currentList.Items.bind('add',      this.calculateSelected);
       Listie.currentList.Items.fetch();
+    },
+    
+    open : function(list) {
+      Listie.currentList.Items.unbind();
+      Listie.currentList = list;
+      Listie.currentList.Items.refresh(_.map(list.get('items'), function(name) { return { name : name }; }));
+      Listie.currentList.Items.bind('add',      this.add);
+      Listie.currentList.Items.bind('add',      this.calculateSelected);      
+      Listie.currentList.Items.bind('refresh',  this.addAll);
+      Listie.currentList.Items.bind('remove',   this.calculateSelected);
+      Listie.currentList.Items.fetch();      
     },
 
     add : function(item) {

@@ -18,12 +18,11 @@
     initialize : function() {
       var self = this;
       if (!(self.get('items'))) self.set({ 'items': [] }, { silent: true });
-      _.bindAll(this, 'updateItems');
+      _.bindAll(self, 'updateItems');
       self.Items = new Items;
-      _.each(['refresh', 'add', 'remove'], function(e) { self.Items.bind(e, self.updateItems); });
-      self.bind('change:items', function(me, items) {
-        me.Items.refresh(_.map(items, function(name) { return { name : name } }));
-      });
+      self.Items.bind('refresh',  self.updateItems);
+      self.Items.bind('add',      self.updateItems);
+      self.Items.bind('remove',   self.updateItems);
     },
     
     url : function() { return this.isNew() ? '/lists' : '/lists/' + this.id; },

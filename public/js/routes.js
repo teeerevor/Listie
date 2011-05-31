@@ -28,6 +28,7 @@
       if (id === Listie.currentList.get('id')) return false;
       var list = Listie.Lists.get(id);
       Listie.currentList.set(list.attributes); // So we don't lose event bindings
+      Listie.currentList.Items.refresh(_.map(list.get('items'), function(name) { return { name : name }; }));
       $('section.current').removeClass('current');
       return _.delay(function() { Listie.Creator.el.addClass('current'); }, 250);      
     },
