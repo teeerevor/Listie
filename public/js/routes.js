@@ -1,15 +1,16 @@
 (function() {
-  Router = Backbone.Controller.extend({
+  Router = Backbone.Router.extend({
     routes : {
-      ''            : 'currentList',      
-      '!/'          : 'currentList',
-      '!/browse'    : 'browse',
-      '!/account'   : 'account',
-      '!/lists/:id' : 'show',
-      '!/sign-out'  : 'signOut'
+      ''            : 'newList',      
+      '/'           : 'newList',
+      '/browse'     : 'browse',
+      '/account'    : 'account',
+      '/lists/:id'  : 'show',
+      '/sign-out'   : 'signOut'
     },
     
     currentList : function() {
+      Listie.Creator.open('new');
       $('section.current').removeClass('current');
       _.delay(function() { Listie.Creator.el.addClass('current'); }, 250);
     },
@@ -25,10 +26,8 @@
     },
     
     show : function(id) {
-      if (id === Listie.currentList.get('id')) return false;
       var list = Listie.Lists.get(id);
-      Listie.currentList.set(list.attributes); // So we don't lose event bindings
-      Listie.currentList.Items.refresh(_.map(list.get('items'), function(name) { return { name : name }; }));
+      Listie.Creator.open(list);
       $('section.current').removeClass('current');
       return _.delay(function() { Listie.Creator.el.addClass('current'); }, 250);      
     },

@@ -64,14 +64,14 @@
     <script>
       Listie = {};
       yepnope([
-        { load: ['/js/jquery-1.6.1.min.js', '/js/underscore.js', '/js/backbone.js', '/js/localstorage.js'] }, // deps
+        { load: ['/js/jquery-1.6.1.min.js', '/js/underscore.js', '/js/backbone.js', '/js/backbone.localStorage.js'] }, // deps
         {
           load: ['/js/models.js', '/js/lists.js', '/js/account.js', '/js/routes.js'], // app stuff
           complete  : function() {
             // Data-related stuff first
             Listie.User = new User;
             Listie.Lists = new Lists;
-            Listie.currentList = new List;
+            // Listie.currentList = new List;
 
             Listie.Creator = new Creator;
             Listie.Browser = new Browser;
@@ -81,7 +81,11 @@
             // Let's cheat a little and save one roundtrip to the server
             <% if @user %>
             Listie.User.set(<%= @user.to_json methods: [:id] %>);
-            Listie.Lists.refresh(<%= @user.lists.to_json methods: [:id] %>);
+              <% @user.lists.each do |list| %>
+                var list = new List(<%= list.to_json methods: [:id] %>);
+                Listie.Lists.add(list);
+              <% end %>
+            // Listie.Lists.reset(<%= @user.lists.to_json methods: [:id] %>);
             <% end %>
             
             Backbone.history.start(); // Start the engines!

@@ -19,13 +19,14 @@
 
   var ItemView = CheckBoxListView.extend({
     template  : _.template($('#list-item-template').html()),
+    
     check : function() {
       Listie.Creator.calculateSelected();
     }
   });
 
   var ListView = CheckBoxListView.extend({
-    template  : _.template($('#list-template').html()),
+    template  : _.template($('#list-template').html()),    
 
     check : $.noop
   });
@@ -36,7 +37,7 @@
     initialize : function() {
       _.bindAll(this, 'add', 'addAll');
       Listie.Lists.bind('add',      this.add);
-      Listie.Lists.bind('refresh',  this.addAll);
+      Listie.Lists.bind('reset',  this.addAll);
     },
 
     add : function(list) {
@@ -62,22 +63,20 @@
 
     initialize : function() {
       _.bindAll(this, 'add', 'addAll', 'open', 'calculateSelected', 'removeSelected');
-      Listie.currentList.Items.bind('add',      this.add);
-      Listie.currentList.Items.bind('add',      this.calculateSelected);      
-      Listie.currentList.Items.bind('refresh',  this.addAll);
-      Listie.currentList.Items.bind('remove',   this.calculateSelected);
-      Listie.currentList.Items.fetch();
     },
     
     open : function(list) {
-      Listie.currentList.Items.unbind();
-      Listie.currentList = list;
-      Listie.currentList.Items.refresh(_.map(list.get('items'), function(name) { return { name : name }; }));
+      if (list === 'new') {
+        Listie.currentList = new List;
+      } else {
+       if (Listie.currentList) Listie.currentList.Items.unbind();
+        Listie.currentList = list;        
+      }
       Listie.currentList.Items.bind('add',      this.add);
       Listie.currentList.Items.bind('add',      this.calculateSelected);      
-      Listie.currentList.Items.bind('refresh',  this.addAll);
-      Listie.currentList.Items.bind('remove',   this.calculateSelected);
-      Listie.currentList.Items.fetch();      
+      Listie.currentList.Items.bind('reset',    this.addAll);
+      Listie.currentList.Items.bind('remove',   this.calculateSelected);      
+      Listie.currentList.Items.reset(_.map(list.get('items'), function(name) { return { name : name }; }));
     },
 
     add : function(item) {
@@ -102,7 +101,8 @@
     calculateSelected : function() {
       var total = Listie.currentList.Items.selected().length,
         button = this.el.find('#delete-items');
-      total ? button.text('Delete (' + total + ')') && button.removeAttr('disabled') : button.text('Delete') && button.attr('disabled', 'disabled');
+      total ? button.text('Delete (' + total + ')') && button.removeAttr('disabled') : 
+        button.text('Delete') && button.attr('disabled', 'disabled');
     },
 
     removeSelected : function() {
@@ -111,7 +111,7 @@
     
     newList : function() {
       Listie.currentList.set({ id: undefined, date: undefined, lists: []})
-      Listie.currentList.Items.refresh([]);
+      Listie.currentList.Items.reset([]);
       location.hash = '!/';
     },
 

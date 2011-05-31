@@ -1,7 +1,9 @@
 (function() {
-  var Item = Backbone.Model.extend();
+  var Item = Backbone.Model.extend({
+    quack : function() { console.log('quack')}
+  });
   
-  var Items = Backbone.Collection.extend({
+  Items = Backbone.Collection.extend({
     model : Item,
     localStorage : new Store('list'),
     
@@ -20,9 +22,9 @@
       if (!(self.get('items'))) self.set({ 'items': [] }, { silent: true });
       _.bindAll(self, 'updateItems');
       self.Items = new Items;
-      self.Items.bind('refresh',  self.updateItems);
-      self.Items.bind('add',      self.updateItems);
-      self.Items.bind('remove',   self.updateItems);
+      self.Items.bind('reset',  self.updateItems);
+      self.Items.bind('add',    self.updateItems);        
+      self.Items.bind('remove', self.updateItems);        
     },
     
     url : function() { return this.isNew() ? '/lists' : '/lists/' + this.id; },
@@ -37,9 +39,7 @@
     
     initialize : function() {
       var self = this;
-      Listie.User.bind('change:lists', function(user, lists) {
-        self.refresh(lists);
-      });
+      Listie.User.bind('change:lists', function(user, lists) { self.reset(lists); });
     }
   });
 })();
