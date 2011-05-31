@@ -1,6 +1,7 @@
 (function() {
   Router = Backbone.Controller.extend({
     routes : {
+      ''            : 'currentList',      
       '!/'          : 'currentList',
       '!/browse'    : 'browse',
       '!/account'   : 'account',

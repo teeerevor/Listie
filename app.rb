@@ -55,7 +55,7 @@ post '/sign-in' do
   user = User.where(name: params['name']).first
   halt(401, {}, 'Invalid user name!') unless user
   session[:user_id] = user.id
-  user.to_json methods: [:id], include: [:lists]
+  user.to_json methods: [:id], include: { lists: { methods: [:id] } }
 end
 
 get '/sign-out' do
