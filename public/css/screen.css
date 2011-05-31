@@ -104,56 +104,59 @@ a, a:active, a:visited { color: #607890; }
 a:hover { color: #036; }
 /* End reset */
 
-body > section {
-  position: absolute;
-  width: 900px;
-  opacity: 0;
-  -webkit-transition: all 0.25s ease-out;
-  -webkit-transform: translate3d(-50px,0,0);
-}
-
-body > section.current { -webkit-transform: translate3d(0,0,0); opacity: 1; z-index: 999 }
-
-input, button { font-family: inherit }
-input::-webkit-input-placeholder { font-style: italic }
-
-button {
-  border: 0;
-  text-shadow: 1px 1px 0px #757575;
-  color: #FFF;
-  display: inline-block;
-  padding: 0.15em 0.25em;
-  text-decoration: none;
-  text-transform: uppercase;
-  -webkit-box-shadow: 1px 1px 0px #000;
-  -webkit-border-radius: 0.5em;  
-}
-button:disabled { opacity: 0.5 }
-
-body { width: 900px; margin: 50px auto; font-family: 'Amaranth' }
-
+body { width: 700px; margin: 50px auto; background: #dad5c5; font-family: 'Amaranth' }
 body > header { font-family: 'Waiting for the Sunrise'; font-size: 8em }
 body > header *   { display: inline-block }
 body > header h1  { -webkit-transform: translate3d(0, 0, 0); opacity: 1; -webkit-animation: from-left 1s 1 ease-out }
 body > header img { -webkit-transform: translate3d(0, 0, 0) rotate(50deg); -webkit-animation: from-the-sky 2s 1 linear; }
 
-menu > button { font-size: 1.5em; margin-right: 0.5em }
+body > section {
+  position: absolute;
+  width: 700px;
+  min-height: 500px;
+  opacity: 0;
+  background: #c6bea6;
+  color: #513537;
+  -webkit-transition: all 0.25s ease-out;
+  -webkit-transform: translate3d(-50px,0,0);
+}
+body > section.current { -webkit-transform: translate3d(0,0,0); opacity: 1; z-index: 999 }
 
+/* Specific sections */
+#list menu { padding: 0.5rem;}
+#list menu > button, #list menu > a.button { font-size: 1.5em; margin-right: 0.5em }
 #new-item { margin: 30px 0 15px }
-
-#new-list         { background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#01f751), to(#01c440)) }
-#new-list:before  { font-size: 1.25em; content: '+'; padding-right: 0.25em; -webkit-border-radius: 0.5em }
-#delete-items         { background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fe422b), to(#f51c01)) }
-#delete-items:before  { font-size: 1.25em; content: '-'; padding-right: 0.25em; -webkit-border-radius: 0.5em }
+#list menu > *:before { font-size: 1.25em; padding-right: 0.25em}
+#new-list:before      { content: '+' }
+#save-list:before     { content: '✓' }
+#delete-items:before  { content: '-' }
+#browse-lists:before  { content: '❏' }
 
 #new-item       { width: 50% }
 #new-item input { font-size: 1.5em; width: 100% }
 
-#items { list-style-type: none; margin: 0 }
-#items li { font-size: 1.4em; margin: 0.25em 0; }
+#items          { list-style-type: none; margin: 0 }
+#items li       { font-size: 1.4em; margin: 0.25em 0; padding: 0.25em 0.5rem; border-bottom: 1px dashed #513537 }
 #items li input { margin-right: 0.5em }
-#items li.negative:before { display: inline-block; content: '✗'; width: 1em; padding: 0 0.1em 0 0; margin-right: 0.5em; text-align: center; -webkit-border-radius: 0.5em; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fe422b), to(#f51c01)); text-shadow: 1px 1px 0px #000; color: #fff; }
-#items li.positive:before { display: inline-block; content: '✓'; width: 1em; padding: 0 0.1em 0 0; margin-right: 0.5em; text-align: center; -webkit-border-radius: 0.5em; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#01f751), to(#01c440)); text-shadow: 1px 1px 0px #000; color: #fff; }
+
+input, button { font-family: inherit }
+input::-webkit-input-placeholder { font-style: italic }
+a.button, button {
+  border: 0;
+  color: inherit;
+  background: transparent;
+  display: inline-block;
+  padding: 0.15em 0.25em;
+  text-decoration: none;
+}
+button:disabled { opacity: 0.5 }
+
+/* Ze shadows */
+body > section {
+  -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2), inset 0px 0px 20px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow:    0 3px 5px rgba(0, 0, 0, 0.2), inset 0px 0px 20px rgba(0, 0, 0, 0.1);
+  box-shadow:         0 3px 5px rgba(0, 0, 0, 0.2), inset 0px 0px 20px rgba(0, 0, 0, 0.1)
+}
 
 @-webkit-keyframes from-left {
   0%    { -webkit-transform: translate3d(-50px, 0, 0); opacity: 0 }
