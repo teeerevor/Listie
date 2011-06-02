@@ -104,6 +104,8 @@ a, a:active, a:visited { color: #607890; }
 a:hover { color: #036; }
 /* End reset */
 
+a { color: inherit; text-decoration: underline }
+
 body { width: 700px; margin: 50px auto; background: #dad5c5; font-family: 'Amaranth' }
 body > header { font-family: 'Waiting for the Sunrise'; font-size: 8em }
 body > header *   { display: inline-block }
@@ -123,24 +125,27 @@ body > section {
 body > section.current { -webkit-transform: translate3d(0,0,0); opacity: 1; z-index: 999 }
 
 /* Specific sections */
-#list menu { padding: 0.5rem;}
+#list menu { padding: 0.5rem }
 #list menu > button, #list menu > a.button { font-size: 1.5em; margin-right: 0.5em }
-#new-item { margin: 30px 0 15px }
+#new-item input { ; }
 #list menu > *:before { font-size: 1.25em; padding-right: 0.25em}
 #new-list:before      { content: '+' }
 #save-list:before     { content: '✓' }
 #delete-items:before  { content: '-' }
 #browse-lists:before  { content: '❏' }
 
-#new-item       { width: 50% }
-#new-item input { font-size: 1.5em; width: 100% }
+#new-item       { width: 50%; margin: 30px 0 15px; padding-left: 0.5rem }
+#new-item input { width: 100%; padding: 0.15em 0.25em; border: 2px dashed #513537; background: transparent; color: inherit; font-size: 1.8em; outline: 0 }
 
 #items          { list-style-type: none; margin: 0 }
 #items li       { font-size: 1.4em; margin: 0.25em 0; padding: 0.25em 0.5rem; border-bottom: 1px dashed #513537 }
 #items li input { margin-right: 0.5em }
 
+#browse h1 { font-size: 2em; padding: 0.5rem }
+#browse ul { font-size: 1.4em }
+
 input, button { font-family: inherit }
-input::-webkit-input-placeholder { font-style: italic }
+input::-webkit-input-placeholder { font-style: italic; color: inherit }
 a.button, button {
   border: 0;
   color: inherit;

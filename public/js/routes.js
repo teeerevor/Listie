@@ -27,7 +27,6 @@
     
     show : function(id) {
       var list = Listie.Lists.get(id);
-      console.log('opening ' + id + ' and got : ' + list);
       Listie.Creator.open(list);
       $('section.current').removeClass('current');
       return _.delay(function() { Listie.Creator.el.addClass('current'); }, 250);      
