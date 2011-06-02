@@ -37,7 +37,7 @@
     initialize : function() {
       _.bindAll(this, 'add', 'addAll');
       Listie.Lists.bind('add',      this.add);
-      Listie.Lists.bind('reset',  this.addAll);
+      Listie.Lists.bind('reset',    this.addAll);
     },
 
     add : function(list) {
@@ -67,16 +67,17 @@
     
     open : function(list) {
       if (list === 'new') {
-        Listie.currentList = new List;
+        var newList = new List;
+        Listie.currentList = newList;
       } else {
-       if (Listie.currentList) Listie.currentList.Items.unbind();
+        if (Listie.currentList) Listie.currentList.Items.unbind('all');
         Listie.currentList = list;        
       }
       Listie.currentList.Items.bind('add',      this.add);
       Listie.currentList.Items.bind('add',      this.calculateSelected);      
       Listie.currentList.Items.bind('reset',    this.addAll);
       Listie.currentList.Items.bind('remove',   this.calculateSelected);      
-      Listie.currentList.Items.reset(_.map(list.get('items'), function(name) { return { name : name }; }));
+      Listie.currentList.Items.reset(_.map(Listie.currentList.get('items'), function(name) { return { name : name }; }));      
     },
 
     add : function(item) {
@@ -110,8 +111,6 @@
     },
     
     newList : function() {
-      Listie.currentList.set({ id: undefined, date: undefined, lists: []})
-      Listie.currentList.Items.reset([]);
       location.hash = '!/';
     },
 
@@ -119,7 +118,7 @@
       Listie.currentList.save(
         { }, // Save whatever attributes we've set() before
         {
-          success : function(model) { location.hash = '!/lists/' + model.get('id'); },
+          success : function(model) { Listie.Lists.add(model); location.hash = '!/lists/' + model.get('id'); },
           error   : function(attrs, response) { if (response.status === 401) location.hash = '!/account';
         }
       });
