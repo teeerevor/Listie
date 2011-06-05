@@ -10,10 +10,13 @@ set root:   File.dirname(__FILE__),
     public: Sinatra::Application.root + '/public',
     js:     Sinatra::Application.root + '/public/js',
     sessions: true
-                               
+
 configure do
+  #Mongoid.configure do |config|
+    #config.from_hash YAML.load_file(Sinatra::Application.root + '/database.yml')[Sinatra::Application.environment.to_s]
+  #end
   Mongoid.configure do |config|
-    config.from_hash YAML.load_file(Sinatra::Application.root + '/database.yml')[Sinatra::Application.environment.to_s]
+    config.master = Mongo::Connection.new.db("Listie")
   end
 end
 
@@ -67,13 +70,13 @@ end
 post '/lists' do
   content_type :json
   login_required!
-  list = @user.lists.create date: Date.today, items: params[:items] || []
+  list = @user.lists.create date: Date.today, items: params[:items], name: params[:name] || []
   list.to_json methods: [:id]
 end
 
 put '/lists/:id' do
   content_type :json
   list = @user.lists.find params[:id]
-  list.update_attributes items: params[:items]
+  list.update_attributes items: params[:items], name: params[:name]
   list.to_json methods: [:id]
 end

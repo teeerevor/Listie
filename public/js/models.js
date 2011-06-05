@@ -29,11 +29,15 @@
 
     updateItems : function() {
       this.set({ items : this.Items.map(function(item) { return item.get('name'); }) });
+    },
+    updateName : function(){
+      //this.set({:name, })
     }
   });
 
   Lists = Backbone.Collection.extend({
     url : '/lists',
+    model : List,
 
     initialize : function() {
       var self = this;

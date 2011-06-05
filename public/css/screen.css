@@ -132,7 +132,10 @@ body > section.current { -webkit-transform: translate3d(0,0,0); opacity: 1; z-in
 #new-list:before      { content: '+' }
 #save-list:before     { content: '✓' }
 #delete-items:before  { content: '-' }
-#browse-lists:before  { content: '❏' }
+#browse-lists:before  { content: '✈' }
+
+#list-name .hide{ display: none }
+#list-name a{ text-decoration: none }
 
 #new-item       { width: 50%; margin: 30px 0 15px; padding-left: 0.5rem }
 #new-item input { width: 100%; padding: 0.15em 0.25em; border: 2px dashed #513537; background: transparent; color: inherit; font-size: 1.8em; outline: 0 }

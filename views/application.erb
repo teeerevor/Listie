@@ -23,6 +23,16 @@
       <form action="/items" method="post" id="new-item">
         <input type="text" name="name" id="item-name" placeholder="Enter an item name and press enter">
       </form>
+      <section id='list-name'>
+        <form action="/list/name" method="post">
+            <input type="text" name="name" placeholder="List Name">
+            <a href="#" id='save-name'>✓</a>
+        </form>
+        <div class='hide'>
+          <span></span>
+          <a href="#" id='edit-name'>✎</a>
+        </div>
+      </section>
       <ul id="items">
         <li class="empty negative">This list has no items yet!</li>
       </ul>
@@ -57,9 +67,14 @@
       <%%= name %>
     </script>
     <script type="text/template" id="list-template">
-      <input type="checkbox">
-      <a href="#!/lists/<%%= id %>"><%%= date.toString() %></a>
-    </script>    
+      <a href="#!/lists/<%%= id %>"><%%= name ? name : date.toString() %></a>
+    </script>
+    <script type="text/template" id="list-name-edit">
+      <input type="text"  name="name" value="<%%= name %>" placeholder="List Name">
+      <a href="#" class='save'>✓</a>
+    </script>
+    <script type="text/template" id="list-name-show">
+    </script>
     <script src="/js/yepnope.1.0.1-min.js"></script>
     <script>
       Listie = {};
@@ -77,7 +92,7 @@
             Listie.Browser = new Browser;
             Listie.Router = new Router;
             Listie.Account = new AccountManager;
-            
+
             // Let's cheat a little and save one roundtrip to the server
             <% if @user %>
             Listie.User.set(<%= @user.to_json methods: [:id] %>);
@@ -86,7 +101,7 @@
                 Listie.Lists.add(list);
               <% end %>
             <% end %>
-            
+
             Backbone.history.start(); // Start the engines!
           }
         }
